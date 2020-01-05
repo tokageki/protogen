@@ -14,3 +14,8 @@ din -> 12
 cs -> 11
 
 clk -> 10
+
+
+
+
+You need The LedControl library 
