@@ -11,7 +11,7 @@
                              Instagram : @tokagekis
                               Twitter : @Tokageki
                               
-                    Don't forget install LedControl library !!!
+           You need the LedControl library, don't forget to install it
         
                                                                             */
 
