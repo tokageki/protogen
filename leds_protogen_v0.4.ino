@@ -5,15 +5,18 @@
       88~~~   88`8b   88    88    88    88    88 88  ooo 88~~~~~ 88 V8o88 
       88      88 `88. `8b  d8'    88    `8b  d8' 88. ~8~ 88.     88  V888 
       88      88   YD  `Y88P'     YP     `Y88P'   Y888P  Y88888P VP   V8P 
-                                                                    
+         Protogen specie was created and by Malice-risu on Fur Affinity      
+           
+           ----------------------------------------------------------
                   arduino protogen face project by Tokageki,
                              You can follow me on : 
                              Instagram : @tokagekis
                               Twitter : @Tokageki
-                              
-           You need the LedControl library, don't forget to install it
+           ----------------------------------------------------------
+           
+        /!\ You need the LedControl library, don't forget to install it /!\
         
-                                                                            */
+                                                                                   */
 
 #include "LedControl.h"
 #include <avr/pgmspace.h>
