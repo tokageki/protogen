@@ -18,4 +18,4 @@ clk -> 10
 
 
 
-You need The LedControl library 
+/!\You need The LedControl library, don't forget to install it /!\
