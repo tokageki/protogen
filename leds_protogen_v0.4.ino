@@ -5,7 +5,7 @@
       88~~~   88`8b   88    88    88    88    88 88  ooo 88~~~~~ 88 V8o88 
       88      88 `88. `8b  d8'    88    `8b  d8' 88. ~8~ 88.     88  V888 
       88      88   YD  `Y88P'     YP     `Y88P'   Y888P  Y88888P VP   V8P 
-         Protogen specie was created and by Malice-risu on Fur Affinity      
+          Protogen specie was created by Malice-risu on Fur Affinity      
            
            ----------------------------------------------------------
                   arduino protogen face project by Tokageki,
