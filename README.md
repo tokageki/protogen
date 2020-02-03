@@ -19,8 +19,12 @@ clk -> 10
 HC-06 connection : 
 
 rxd -> 3
+
 txd -> 2
+
 gnd -> gnd
+
 vcc -> 3.3v
+
 
 /!\You need The LedControl library, don't forget to install it /!\
