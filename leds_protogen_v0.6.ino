@@ -1,34 +1,12 @@
-/*     
-      d8888b. d8888b.  .d88b.  d888888b  .d88b.   d888b  d88888b d8b   db 
-      88  `8D 88  `8D .8P  Y8. `~~88~~' .8P  Y8. 88' Y8b 88'     888o  88 
-      88oodD' 88oobY' 88    88    88    88    88 88      88ooooo 88V8o 88 
-      88~~~   88`8b   88    88    88    88    88 88  ooo 88~~~~~ 88 V8o88 
-      88      88 `88. `8b  d8'    88    `8b  d8' 88. ~8~ 88.     88  V888 
-      88      88   YD  `Y88P'     YP     `Y88P'   Y888P  Y88888P VP   V8P 
-          Protogen specie was created by Malice-risu on Fur Affinity      
-           
-           ----------------------------------------------------------
-                  arduino protogen face project by Tokageki,
-                             You can follow me on : 
-                             Instagram : @tokagekis
-                              Twitter : @Tokageki
-           ----------------------------------------------------------
-           
-        /!\ You need the LedControl library, don't forget to install it /!\
-        
-  
-
-
-#include "LedControl.h"
-#include <avr/pgmspace.h>
+#include "LedControl.h"       //don't forget the ledcontrol library !!!
 #include <SoftwareSerial.h>
-SoftwareSerial hc06(2, 3);
-String cmd = "happy";
+SoftwareSerial hc06(2, 3);    //creation of a serial port for use a HC-06
+String cmd = "happy";         
 float sensor_val = 0;
 
-const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √† constance (contrairement √† une variable, une constante ne bouge pas [elle reste ... constante])
+const byte oeil[][8] = { //creation of an array containing all the expressions
   {
-    B00111100,    //normal oeil         0
+    B00111100,    //normal eye           0
     B01111110,
     B01111110,
     B01111110,
@@ -38,7 +16,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00111100
   }
   ,
-  { B00000000,    //normal bouche 1     1
+  { B00000000,    //normal mouth  1      1
     B00000000,
     B01100000,
     B11111001,
@@ -48,7 +26,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00000000
   }
   ,
-  { B00000000,    //normal bouche 2     2
+  { B00000000,    //normal mouth   2     2
     B00011000,
     B01111110,
     B11100111,
@@ -58,7 +36,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00000000
   }
   ,
-  { B00000000,    //normal bouche 3     3
+  { B00000000,    //normal mouth   3     3
     B00000001,
     B00000111,
     B10011110,
@@ -68,7 +46,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00000000
   }
   ,
-  { B00111100,    //oeil grand ferm√©    4
+  { B00111100,    //eye animation open    4
     B01111110,
     B01111110,
     B01111110,
@@ -78,7 +56,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00000000
   } 
   ,
-  { B00111100,    //oeil grand ferm√© 2  5
+  { B00111100,    //eye animation intermediate  5
     B01111110,
     B01111110,
     B01111110,
@@ -88,7 +66,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00000000
   }
   ,
-  { B00111100,    //oeil petit 3         6
+  { B00111100,    //eye animation small   6
     B01111110,
     B00000000,
     B00000000,
@@ -98,7 +76,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00000000
   }
   ,
-  { B01111110,    //oeil ferm√© 4         7
+  { B01111110,    //eye closed           7
     B00000000,
     B00000000,
     B00000000,
@@ -108,7 +86,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00000000
   }
   ,
-  { B00000000,    //bouche bouge 1       8
+  { B00000000,    //mouth anim          8
     B00000000,
     B10000001,
     B11100111,
@@ -118,7 +96,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00000000
   }
   ,
-  { B00000000,    //bouche bouge 2       9
+  { B00000000,    //mouth anim 2        9
     B00000000,
     B10000000,
     B11100000,
@@ -128,7 +106,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00000000
   }
   ,
-  { B00000000,    //bouche bouge 3      10
+  { B00000000,    //mouth anim 3       10
     B00000000,
     B00011000,
     B01111110,
@@ -138,7 +116,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00000000
   }
   ,
-  { B00000000,    //bouche neutre       11
+  { B00000000,    //mouth neutral       11
     B00000000,
     B00000000,
     B11111111,
@@ -148,7 +126,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00000000,
   }
   ,
-  { B00111100,    //oeil neutre         12
+  { B00111100,    //eye neutral         12
     B01111110,
     B01111110,
     B01111110,
@@ -158,7 +136,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00000000
   }
   ,
-  { B00000000,    //oeil amoureux       13
+  { B00000000,    //eye love       13
     B00010000,
     B00111000,
     B01111100,
@@ -168,7 +146,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00000000
   }
   ,
-  { B00111100,    //oeil fach√©          14
+  { B00111100,    //eye angry          14
     B01111110,
     B01111110,
     B01111100,
@@ -178,7 +156,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00001100
   }
   ,
-  { B00000000,    //oeil coeur animation 15
+  { B00000000,    //eye heart anim     15
     B00000000,
     B00010000,
     B00111000,
@@ -188,7 +166,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00000000
   }
   ,
-  { B00111100,    //fach√© c√¥t√© 2         16
+  { B00111100,    //angry mouth         16
     B01111110,
     B01111110,
     B00111110,
@@ -198,7 +176,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00110000
   }  
   ,
-  { B00011000,    //bouche content bout  17 
+  { B00011000,    //mouth angry part  17 
     B00111100,
     B01100110,
     B11000011,
@@ -209,7 +187,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
   }
   ,
   {
-    B00000000,    //oeil ^w^             18
+    B00000000,    //eye ^w^             18
     B00000000,
     B00000000,
     B01000010,
@@ -220,7 +198,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
   }
   ,
   {
-    B00000000,    //oeil smug            19
+    B00000000,    //eye smug            19
     B00000000,
     B00001100,
     B00011110,
@@ -231,7 +209,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
   }
   ,
   {
-    B00000000,    //oeil smug 2          20
+    B00000000,    //eye smug 2          20
     B00000000,
     B00110000,
     B01111000,
@@ -241,7 +219,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00000000
   }  
   ,
-  { B00111110,    //bugg√© oeil           21
+  { B00111110,    //eye glitched (missingno ^^)  21
     B00111110,
     B00111110,
     B00111110,
@@ -251,7 +229,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00111000
   }
   ,
-  { B00000000,    //bugg√© bouche         22
+  { B00000000,    //mouth glitcheed     22
     B10000000,
     B00100101,
     B11110010,
@@ -262,7 +240,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
   }
   ,
   { 
-    B00100000,    //bugg√© bouche 2       23
+    B00100000,    //mouth glitched 2       23
     B00001000,
     B01111110,
     B10100011,
@@ -271,7 +249,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
     B00000000,
     B00000000 
 },{
-    B00000000,    //bugg√© bouche 3       24
+    B00000000,    //mouth glitched 3       24
     B00010010,
     B00010100,
     B01001111,
@@ -282,7 +260,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
   }
   ,
   {
-    B00111100,    //oeil √©tonn√©           25
+    B00111100,    //eye surprised           25
     B01000010,
     B10000001,
     B10000001,
@@ -293,7 +271,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    ,
    {
-    B00111100,    //oeil triste           26
+    B00111100,    //eye sad           26
     B01111110,
     B01111110,
     B00111110,
@@ -304,7 +282,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    ,
    {
-    B00000000,    //bouche 1 triste       27
+    B00000000,    //mouth sad       27
     B10000000,
     B11000001,
     B01100011,
@@ -315,7 +293,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    ,
    {
-    B00000000,    //bouche 2 triste       28
+    B00000000,    //mouth sad 2       28
     B00000000,
     B00000001,
     B00100011,
@@ -326,7 +304,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    ,
    {
-    B00110000,    //bouche 3 triste       29
+    B00110000,    //mouth sad 3       29
     B00011000,
     B00001100,
     B00000110,
@@ -337,7 +315,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    ,
    {
-    B00111100,    //oeil 2 triste         30
+    B00111100,    //eye sad 2         30
     B01111110,
     B01111110,
     B01111100,
@@ -348,7 +326,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    ,
    {
-    B00000000,    //bouche 1 triste 2     31
+    B00000000,    //mouth sad other side     31
     B00000001,
     B10000011,
     B11000110,
@@ -359,7 +337,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    ,
    {
-    B00000000,    //bouche 2 triste 2     32
+    B00000000,    //mouth sad other side 2     32
     B00000000,
     B10000000,
     B11000100,
@@ -370,7 +348,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    ,
    {
-    B00001000,    //bouche 3 triste 2     33
+    B00001000,    //mouth sad other side 3     33
     B00011000,
     B00110000,
     B01100000,
@@ -381,7 +359,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    ,
    {
-    B11111111,    //trop chaud oeil      34
+    B11111111,    //overheat eye      34
   B00100100,
   B01001000,
   B00100100,
@@ -392,7 +370,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    , 
    {
-    B00000000,    //trop chaud bouche 1  35
+    B00000000,    //overheat mouth   35
   B01000100,
   B01001010,
   B01001010,
@@ -403,7 +381,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    ,
    {
-    B00000000,    //trop chaud bouche 2   36
+    B00000000,    //overheat mouth 2   36
   B10100001,
   B10100010,
   B11100010,
@@ -414,7 +392,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    ,
    {
-    B00000000,    //trop chaud bouche 3   37
+    B00000000,    //overheat mouth 3   37
   B00010010,
   B10101010,
   B10101010,
@@ -425,7 +403,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    ,
    {
-   B10011000,     //bouche orma 1         38
+   B10011000,     //mouth Ormarion         38   (Go check Ormarion's youtube chanel !)
   B11001100,
   B01100110,
   B00110011,
@@ -436,7 +414,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    , 
    {
-   B10011001,     //orma bouche 2          39
+   B10011001,     //mouth Ormarion 2          39
   B11001100,
   B01100110,
   B00110011,
@@ -447,7 +425,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    ,
    {
-    B10011001,    //orma bouche 3          40
+    B10011001,    //mouth Ormarion 3          40
   B00110011,
   B01100110,
   B11001100,
@@ -458,7 +436,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    ,
    {
-    B00011001,    //orma bouche 4          41
+    B00011001,    //mouth Ormarion 4          41
   B00110011,
   B01100110,
   B11001100,
@@ -469,7 +447,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    ,
    {
-  B01111110,    //oeil batterie            42
+  B01111110,    //eye battery           42
   B01000010,
   B01011010,
   B01000010,
@@ -478,7 +456,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
   B01011010,
   B01000010
 },{
-  B01111110,                              //43
+  B01111110,   //eye battery 2      43
   B01000010,
   B01011010,
   B01000010,
@@ -487,7 +465,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
   B01000010,
   B01000010
 },{
-  B01111110,                              //44
+  B01111110,  //eye battery 2         44
   B01000010,
   B01011010,
   B01000010,
@@ -496,7 +474,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
   B01000010,
   B01000010
 },{
-  B01111110,                              //45
+  B01111110,  //eye battery 2  45
   B01000010,
   B01000010,
   B01000010,
@@ -507,7 +485,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
    ,
    {
-    B00000000,    //vide                    46
+    B00000000,    //nothing                    46
   B00000000,
   B00000000,
   B00000000,
@@ -516,7 +494,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
   B00000000,
   B00000000
 },{ 
-  B00000000,      // points 1               47
+  B00000000,      //wait 1               47
   B00000000,
   B00000000,
   B00000011,
@@ -526,7 +504,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
   B00000000
 },{
   B00000000,
-  B00000000,      // points 2               48
+  B00000000,      //wait 2              48
   B00000000,
   B00011011,
   B00011011,
@@ -535,7 +513,7 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
   B00000000
 },{
   B00000000,
-  B00000000,      // points 3               49
+  B00000000,      //wait 3               49
   B00000000,
   B11011011,
   B11011011,
@@ -545,9 +523,9 @@ const byte oeil[][8] = { //definition des motifs de la matrice dans un tableau √
    }
 };
 
-int nombreMatrice = 8;
+int matriceNumber = 8;
 // ledcontrol(DataIn,CLK,LOAD,nombreafficheur)
-LedControl lc = LedControl(12, 10, 11, nombreMatrice);
+LedControl lc = LedControl(12, 10, 11, matriceNumber);
 
 void setup() {
   //Initialize Serial Monitor
