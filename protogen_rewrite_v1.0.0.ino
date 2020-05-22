@@ -4,7 +4,7 @@
            ----------------------------------------------------------
                   arduino protogen face project by Tokageki,	                  
                              You can follow me on : 	                                                         
-                             Instagram : @tokagekis
+                             Instagram : @tokageki_
                               Twitter : @Tokageki	                              
            ----------------------------------------------------------
 
