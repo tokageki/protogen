@@ -1,5 +1,5 @@
 /*
-        Protogen specie was created and by Malice-risu on Fur Affinity      
+        Protogen specie was created by Malice-risu on Fur Affinity      
            
            ----------------------------------------------------------
                   arduino protogen face project by Tokageki,	                  
